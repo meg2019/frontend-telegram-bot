@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option java_multiple_files = true;
+option java_package = "org.acme.backend.model";
+option java_outer_classname = "BackendProtos";
+
+package backend;
+
+// Topic represents a vocabulary category
+message Topic {
+  string name = 1;
+  string description = 2;
+}
+
+// WordPair represents a translation pair
+message WordPair {
+  string source_word = 1;
+  string source_word_desc = 2;
+  string target_word = 3;
+  string target_word_desc = 4;
+}
+
+// TopicCount returns the number of unique topics
+message TopicCount {
+  int64 count = 1;
+}
+
+// Request message for fetching word pairs
+message WordPairRequest {
+  string topic_name = 1;
+  string source_language = 2;
+  string target_language = 3;
+}
+
+service WordService {
+  rpc getTopicCount(google.protobuf.Empty) returns (TopicCount);
+  rpc getTopics(google.protobuf.Empty) returns (stream Topic);
+  rpc getWordPairs(WordPairRequest) returns (stream WordPair);
+}
