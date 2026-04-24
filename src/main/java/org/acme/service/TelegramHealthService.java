@@ -9,6 +9,8 @@ import org.acme.model.TelegramResponse;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
+import java.util.Objects;
+
 @ApplicationScoped
 public class TelegramHealthService {
 
@@ -24,7 +26,7 @@ public class TelegramHealthService {
         try {
             TelegramResponse response = telegramApiClient.getMe(botToken);
             Log.infof("Telegram API was called during health check: %s", response);
-            return response != null && response.ok();
+            return Objects.nonNull(response) && response.ok();
         } catch (Exception e) {
             Log.error("Failed to connect to Telegram API during health check", e);
             return false;
