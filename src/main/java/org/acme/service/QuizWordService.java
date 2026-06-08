@@ -59,12 +59,12 @@ public class QuizWordService {
     @Timeout(value = 5, unit = ChronoUnit.SECONDS)
     @Fallback(fallbackMethod = "getTopicCountFallback")
     public Uni<Long> getAllTopicsNumber() {
-        LOG.debug("Fetching topic count from word service");
+        LOG.debug("✅ Fetching topic count from word service");
         return wordServiceGrpcClient.getTopicCount(Empty.getDefaultInstance())
                 .onItem().transform(TopicCount::getCount)
                 .onFailure(StatusRuntimeException.class)
                 .transform(this::transformGrpcException)
-                .invoke(count -> LOG.debugf("Retrieved topic count: %d", count));
+                .invoke(count -> LOG.debugf("✅ Retrieved topic count: %d", count));
     }
 
     /**
@@ -99,20 +99,20 @@ public class QuizWordService {
     @Timeout(value = 5, unit = ChronoUnit.SECONDS)
     @Fallback(fallbackMethod = "getTopicsFallback")
     public Multi<String> getAllTopicsNameSorted() {
-        LOG.debug("Fetching topics from word service");
+        LOG.debug("✅ Fetching topics from word service");
         return wordServiceGrpcClient.getTopics(Empty.getDefaultInstance())
                 .map(Topic::getName)
                 .collect().asList()
                 .onItem().transform(list -> {
                     List<String> sortedList = new ArrayList<>(list);
-                    sortedList.sort(String::compareToIgnoreCase);
-                    LOG.debugf("Retrieved and sorted %d topics", sortedList.size());
+                    sortedList.sort(String.CASE_INSENSITIVE_ORDER);
+                    LOG.debugf("✅ Retrieved and sorted %d topics", sortedList.size());
                     return sortedList;
                 })
                 .onItem().transformToMulti(Multi.createFrom()::iterable)
                 .onFailure(StatusRuntimeException.class)
                 .transform(this::transformGrpcException)
-                .invoke(() -> LOG.debug("Successfully retrieved and transformed topics"));
+                .invoke(() -> LOG.debug("✅ Successfully retrieved and transformed topics"));
     }
 
 
@@ -156,7 +156,7 @@ public class QuizWordService {
 
         // Input validation
         validateParameters(topicName, sourceLang, targetLang);
-        LOG.debugf("Fetching word pairs for topic: %s, %s x %s", topicName, sourceLang, targetLang);
+        LOG.debugf("✅ Fetching word pairs for topic: %s, %s x %s", topicName, sourceLang, targetLang);
 
         WordPairRequest request = WordPairRequest.newBuilder()
                 .setTopicName(topicName)
@@ -168,7 +168,7 @@ public class QuizWordService {
                 .onItem().transform(this::mapToQuizPair)
                 .onFailure(StatusRuntimeException.class)
                 .transform(this::transformGrpcException)
-                .invoke(() -> LOG.debugf("Successfully fetched word pairs for topic: %s", topicName));
+                .invoke(() -> LOG.debugf("✅ Successfully fetched word pairs for topic: %s", topicName));
     }
 
     /**

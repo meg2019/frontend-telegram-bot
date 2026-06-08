@@ -184,9 +184,9 @@ public class CallbackQueryProcessor implements Processor {
     }
 
     public static <T> List<T> getNRandomElements(List<T> list, int n) {
-        Objects.requireNonNull(list, "List must not be null");
+        Objects.requireNonNull(list, "❌ List must not be null");
         if (n <= 0) {
-            throw new IllegalArgumentException("n must be positive, but was: " + n);
+            throw new IllegalArgumentException("❌ n must be positive, but was: " + n);
         }
         // If n is greater than or equal to the list size, return a shuffled copy of the list
         // (This ensures all elements are selected, but in a random order)

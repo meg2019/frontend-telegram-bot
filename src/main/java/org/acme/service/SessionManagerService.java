@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Manages active quiz sessions for users.
+ * Manages active quiz sessions for users through specials methods.
  * <p>
  * Sessions are stored in a ConcurrentHashMap keyed by chatId.
  * Thread-safe for concurrent access from multiple Camel routes.

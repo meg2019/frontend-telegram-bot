@@ -51,8 +51,15 @@ public class TestWordServiceServer implements WordService {
             );
         }
 
-        Topic bTopic = Topic.newBuilder().setName("BTopic").setDescription("Description for Topic B").build();
-        Topic aTopic = Topic.newBuilder().setName("ATopic").setDescription("Description for Topic A").build();
+        Topic bTopic = Topic.newBuilder()
+                .setName("BTopic")
+                .setDescription("Description for Topic B")
+                .build();
+
+        Topic aTopic = Topic.newBuilder()
+                .setName("ATopic")
+                .setDescription("Description for Topic A")
+                .build();
 
         return Multi.createFrom().items(Stream.of(bTopic, aTopic));
     }
@@ -70,8 +77,19 @@ public class TestWordServiceServer implements WordService {
             );
         }
 
-        WordPair wordPair1 = WordPair.newBuilder().setSourceWord("Hello").setTargetWord("Hola").build();
-        WordPair wordPair2 = WordPair.newBuilder().setSourceWord("Goodbye").setTargetWord("Adiós").build();
+        WordPair wordPair1 = WordPair.newBuilder()
+                .setSourceWord("Hello")
+                .setSourceWordDesc("A english greeting")
+                .setTargetWord("Hola")
+                .setTargetWordDesc("A spanish greeting")
+                .build();
+
+        WordPair wordPair2 = WordPair.newBuilder()
+                .setSourceWord("Goodbye")
+                .setSourceWordDesc("A english farewell")
+                .setTargetWord("Adiós")
+                .setTargetWordDesc("A spanish farewell")
+                .build();
 
         return Multi.createFrom().items(Stream.of(wordPair1, wordPair2));
     }

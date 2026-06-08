@@ -10,7 +10,8 @@ import org.apache.camel.component.telegram.model.OutgoingTextMessage;
 
 /**
  * Handles the /start command.
- * Sends a welcome message with an InlineKeyboard listing available quiz topics.
+ * Sends a welcome message with an InlineKeyboard to select
+ * from listing available quiz topics.
  */
 @ApplicationScoped
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class StartCommandProcessor implements Processor {
     /**
      * Processes the /start command by sending an OutgoingTextMessage
      * with Markdown-formatted text and an inline keyboard.
-     *
+     * <p>
      * The OutgoingTextMessage is set as the exchange body,
      * which Apache Camel's Telegram component will then send
      * to the user's chat.

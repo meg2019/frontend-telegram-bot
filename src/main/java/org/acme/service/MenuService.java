@@ -3,11 +3,18 @@ package org.acme.service;
 import io.quarkus.runtime.util.StringUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
+/**
+ * Service responsible for generating formatted text messages for the Telegram bot interface.
+ * All menus are already implemented and ready to use. <p>
+ * This CDI-managed bean provides all user-facing messages including main menu text,
+ * quiz prompts, status updates, and result summaries. All messages use Telegram
+ * Markdown formatting for rich display.
+ * </p>
+ */
 @ApplicationScoped
 public class MenuService {
 

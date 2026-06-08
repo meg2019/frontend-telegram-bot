@@ -11,6 +11,36 @@ import org.apache.camel.component.telegram.model.OutgoingTextMessage;
 import java.lang.management.ManagementFactory;
 import java.time.Duration;
 
+/**
+ * A Camel {@link Processor} implementation that handles the {@code /status} command
+ * in the Telegram bot integration.
+ * <p>
+ * This processor is a Quarkus CDI-managed bean ({@link ApplicationScoped}) and is
+ * invoked by a Camel route when a user requests the bot's status information.
+ * It collects runtime diagnostics — including the Java version, application uptime,
+ * and the total number of quiz topics — and formats them into a Markdown-rendered
+ * {@link OutgoingTextMessage} suitable for delivery via the Telegram Bot API.
+ * <p>
+ * <strong>Dependencies:</strong>
+ * <ul>
+ *   <li>{@link QuizWordService} — provides the total count of available quiz topics.</li>
+ *   <li>{@link MenuService} — formats the collected metrics into a human-readable status string.</li>
+ * </ul>
+ * <p>
+ * <strong>Processing flow:</strong>
+ * <ol>
+ *   <li>Retrieve the current Java version from the system property.</li>
+ *   <li>Compute the application uptime using the JVM runtime MXBean.</li>
+ *   <li>Asynchronously fetch the total topic count from {@link QuizWordService}.</li>
+ *   <li>Delegate to {@link MenuService} to build the formatted status message.</li>
+ *   <li>Set the resulting {@link OutgoingTextMessage} as the outgoing Camel exchange body.</li>
+ * </ol>
+ *
+ * @see Processor
+ * @see OutgoingTextMessage
+ * @see MenuService
+ * @see QuizWordService
+ */
 @ApplicationScoped
 @RequiredArgsConstructor
 public class StatusCommandProcessor implements Processor {

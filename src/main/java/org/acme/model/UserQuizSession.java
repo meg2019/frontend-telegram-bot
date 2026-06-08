@@ -4,12 +4,12 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Thread-safe quiz session for a user.
@@ -156,9 +156,13 @@ public final class UserQuizSession {
         return value;
     }
 
-    private static <T> Collection<? extends T> requireNonEmpty(Collection<? extends T> list, String name) {
-        checkArgument(list != null && !list.isEmpty(),
+    private static <T, C extends Collection<? extends T>> C requireNonEmpty(C collection, String name) {
+        checkArgument(collection != null && !collection.isEmpty(),
                 "Collection %s cannot be null or empty", name);
-        return list;
+        return collection;
+    }
+
+    private static <T extends Comparable<? super T>> Optional<T> max(Collection<T> collection) {
+        return collection.stream().max(Comparator.naturalOrder());
     }
 }

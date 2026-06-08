@@ -28,9 +28,9 @@ class CallbackQueryProcessorTest {
     @ParameterizedTest
     @MethodSource("providesSourceAndResult")
     @DisplayName("Should return n random elements from a list")
-    void getNRandomElements(List<Integer> source, int n, int expected) {
+    void getNRandomElements(List<Integer> source, int n, int expectedAnswerSize) {
         List<Integer> nRandomElements = CallbackQueryProcessor.getNRandomElements(source, n);
-        Log.infof("We got %s as result list", nRandomElements);
-        assertEquals(expected, nRandomElements.size());
+        Log.infof("We got: [%s] as result list", nRandomElements);
+        assertEquals(expectedAnswerSize, nRandomElements.size());
     }
 }

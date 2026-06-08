@@ -6,6 +6,8 @@ import lombok.Builder;
  * Represents a single quiz question-answer pair.
  *
  * @param wrdQuestion The word in the source language (question)
+ * @param wrdQuestionDesc The description of the word in the source language (question)
+ * @param wrdAnswerDesc The description of the word in the target language (expected answer)
  * @param wrdAnswer   The word in the target language (expected answer)
  */
 @Builder

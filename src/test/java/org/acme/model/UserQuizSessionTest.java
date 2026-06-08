@@ -29,7 +29,8 @@ class UserQuizSessionTest {
         return Stream.of(
                 Arguments.of(null, "topic", Collections.singletonList(TEST_QUIZ_PAIR)),
                 Arguments.of("user", null, Collections.singletonList(TEST_QUIZ_PAIR)),
-                Arguments.of("user", "topic", null)
+                Arguments.of("user", "topic", null),
+                Arguments.of("user", "topic", Collections.emptyList())
         );
     }
 
@@ -103,6 +104,4 @@ class UserQuizSessionTest {
         Log.infof("Got this exception message: %s", exception.getMessage());
         assertTrue(exception.getMessage().contains("cannot be null or empty"));
     }
-
-
 }

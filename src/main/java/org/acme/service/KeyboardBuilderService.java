@@ -10,6 +10,36 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Builds Telegram inline keyboards for the quiz bot using Apache Camel Quarkus.
+ *
+ * <p>This CDI service constructs {@link InlineKeyboardMarkup} instances that are
+ * attached to {@link org.apache.camel.component.telegram.model.OutgoingTextMessage}
+ * responses and dispatched through the Camel Telegram component.</p>
+ *
+ * <h2>Callback Data Convention</h2>
+ * <p>Every inline button carries a {@code callbackData} payload that Telegram returns
+ * to the bot when the user presses the button. This service encodes two callback types:</p>
+ * <ul>
+ *   <li>{@link #CALLBACK_PREFIX} ({@code "topic:"}) — topic selection,
+ *       e.g. {@code "topic: Animals"}</li>
+ *   <li>{@link #LENGTH_CALLBACK_PREFIX} ({@code "length:"}) — quiz-length selection,
+ *       e.g. {@code "length: 2|Animals"} where the number is the 1-based portion
+ *       and the topic name follows after a {@code |} separator</li>
+ * </ul>
+ * <p>These prefixes are parsed by {@link org.acme.processor.CallbackQueryProcessor}
+ * to route the callback to the correct handler.</p>
+ *
+ * <h2>Keyboard Layout</h2>
+ * <p>Topic keyboards arrange buttons in rows of two, while length keyboards use rows
+ * of four. Buttons are built with the {@link InlineKeyboardButton#builder()} fluent
+ * API and collected into an {@link InlineKeyboardMarkup} via its builder.</p>
+ *
+ * <h2>Dependencies</h2>
+ * <p>The service is a CDI bean ({@link ApplicationScoped}) injected with
+ * {@link CachedQuizWordService} to retrieve the available topic names. Quiz length
+ * options are derived from the total word-pair count for the selected topic.</p>
+ */
 @ApplicationScoped
 @RequiredArgsConstructor
 public class KeyboardBuilderService {

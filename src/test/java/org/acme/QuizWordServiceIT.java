@@ -61,8 +61,8 @@ public class QuizWordServiceIT {
     @DisplayName("Test word pairs IT")
     @RunOnVertxContext
     void testQuizIT_WordPairsTest(UniAsserter asserter) {
-        QuizPair quizPair1 = new QuizPair("Hello", "Hello Description", "Hola", "Hola Description");
-        QuizPair quizPair2 = new QuizPair("Goodbye", "Goodbye Description", "Adiós", "Adiós Description");
+        QuizPair quizPair1 = new QuizPair("Hello", "A english greeting", "Hola", "A spanish greeting");
+        QuizPair quizPair2 = new QuizPair("Goodbye", "A english farewell", "Adiós", "A spanish farewell");
 
         asserter.assertThat(
                 () -> quizWordService.getWordPairs("TestTopic", "SL", "TL")
